@@ -1,0 +1,18 @@
+{{- if .Values.rng.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: rng
+    servicename: rng
+{{ include "dockercoins-single.labels" . | indent 4 }}
+  name: rng
+spec:
+  ports:
+  - port: {{ .Values.rng.service.port }}
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: rng
+  type: ClusterIP
+{{- end }}

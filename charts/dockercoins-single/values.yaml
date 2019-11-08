@@ -1,0 +1,56 @@
+# Default values for dockercoins-single.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+webui:
+  enabled: false
+  replicasCount: 1
+  image:
+    repository: "127.0.0.1:31077/webui"
+    tag: v0.1
+  ingress:
+    host: webui.192.168.33.101.nip.io
+    servicePort: 80
+  service:
+    port: 80
+    
+
+worker:
+  enabled: false
+  replicasCount: 1
+  image:
+    repository: "127.0.0.1:31077/worker"
+    tag: v0.1
+
+
+rng:
+  enabled: false
+  replicasCount: 1
+  image:
+    repository: "127.0.0.1:31077/rng"
+    tag: v0.1
+  ingress:
+    host: rng.192.168.33.101.nip.io
+    servicePort: 80
+  service:
+    port: 80
+    
+
+hasher:
+  enabled: false
+  replicasCount: 1
+  image:
+    repository: "127.0.0.1:31077/hasher"
+    tag: v0.1
+  ingress:
+    host: hasher.192.168.33.101.nip.io
+    servicePort: 80
+  service:
+    port: 80
+
+
+redis:
+  enabled: false
+  replicasCount: 1
+  service:
+    port: 6379

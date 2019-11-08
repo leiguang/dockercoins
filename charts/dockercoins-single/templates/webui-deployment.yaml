@@ -1,0 +1,24 @@
+{{- if .Values.webui.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: webui
+    servicename: webui
+{{ include "dockercoins-single.labels" . | indent 4 }}
+  name: webui
+spec:
+  replicas: {{ .Values.webui.replicasCount }}
+  selector:
+    matchLabels:
+      app: webui
+  template:
+    metadata:
+      labels:
+        app: webui
+    spec:
+      containers:
+      - image: {{ .Values.webui.image.repository }}/webui:{{ .Values.webui.image.tag }}
+        name: webui
+{{ include "dockercoins-single.probe-if-needed" . | indent 8 }}
+{{- end }}

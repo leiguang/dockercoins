@@ -1,0 +1,18 @@
+{{- if .Values.webui.enabled -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    servicename: webui-ingress
+{{ include "dockercoins-single.labels" . | indent 4 }}
+  name: webui-ingress
+spec:
+  rules:
+  - host: {{ .Values.webui.ingress.host }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: webui
+          servicePort: {{ .Values.webui.ingress.servicePort }}
+{{- end }}

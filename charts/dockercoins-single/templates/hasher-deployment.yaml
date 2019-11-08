@@ -1,0 +1,24 @@
+{{- if .Values.hasher.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: hasher
+    servicename: hasher
+{{ include "dockercoins-single.labels" . | indent 4 }}
+  name: hasher
+spec:
+  replicas: {{ .Values.hasher.replicasCount }}
+  selector:
+    matchLabels:
+      app: hasher
+  template:
+    metadata:
+      labels:
+        app: hasher
+    spec:
+      containers:
+      - image: {{ .Values.hasher.image.repository }}/hasher:{{ .Values.hasher.image.tag }}
+        name: hasher
+{{ include "dockercoins-single.probe-if-needed" . | indent 8 }}
+{{- end }}

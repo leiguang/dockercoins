@@ -1,0 +1,24 @@
+{{- if .Values.redis.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: redis
+    servicename: redis
+{{ include "dockercoins-single.labels" . | indent 4 }}
+  name: redis
+spec:
+  replicas: {{ .Values.redis.replicasCount }}
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - image: redis
+        name: redis
+{{ include "dockercoins-single.probe-if-needed" . | indent 8 }}
+{{- end }}

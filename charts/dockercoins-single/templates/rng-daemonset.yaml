@@ -1,0 +1,24 @@
+{{- if .Values.rng.enabled -}}
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: rng
+    servicename: rng
+{{ include "dockercoins-single.labels" . | indent 4 }}
+  name: rng
+spec:
+  replicas: {{ .Values.rng.replicasCount }}
+  selector:
+    matchLabels:
+      app: rng
+  template:
+    metadata:
+      labels:
+        app: rng
+    spec:
+      containers:
+      - image: {{ .Values.rng.image.repository }}/rng:{{ .Values.rng.image.tag }}
+        name: rng
+{{ include "dockercoins-single.probe-if-needed" . | indent 8 }}
+{{- end }}

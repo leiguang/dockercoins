@@ -1,0 +1,18 @@
+{{- if .Values.hasher.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: hasher
+    servicename: hasher
+{{ include "dockercoins-single.labels" . | indent 4 }}
+  name: hasher
+spec:
+  ports:
+  - port: {{ .Values.hasher.service.port }}
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: hasher
+  type: ClusterIP
+{{- end }}

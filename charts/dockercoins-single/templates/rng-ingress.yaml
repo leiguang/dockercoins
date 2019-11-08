@@ -1,0 +1,18 @@
+{{- if .Values.rng.enabled -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    servicename: rng-ingress
+{{ include "dockercoins-single.labels" . | indent 4 }}
+  name: rng-ingress
+spec:
+  rules:
+  - host: {{ .Values.rng.ingress.host }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: rng
+          servicePort: {{ .Values.rng.ingress.servicePort }}
+{{- end }}

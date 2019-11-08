@@ -1,0 +1,18 @@
+{{- if .Values.hasher.enabled -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    servicename: hasher-ingress
+{{ include "dockercoins-single.labels" . | indent 4 }}
+  name: hasher-ingress
+spec:
+  rules:
+  - host: {{ .Values.hasher.ingress.host }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: hasher
+          servicePort: {{ .Values.hasher.ingress.servicePort }}
+{{- end }}

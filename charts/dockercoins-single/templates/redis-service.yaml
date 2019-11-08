@@ -1,0 +1,18 @@
+{{- if .Values.redis.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: redis
+    servicename: redis
+{{ include "dockercoins-single.labels" . | indent 4 }}
+  name: redis
+spec:
+  ports:
+  - port: {{ .Values.redis.service.port }}
+    protocol: TCP
+    targetPort: 6379
+  selector:
+    app: redis
+  type: ClusterIP
+{{- end }}
